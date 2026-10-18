@@ -1,0 +1,710 @@
+
+/* ========================================
+   BEEHUB — CREATOR ACCESS
+   ======================================== */
+
+
+.admin-login {
+  --honey: #e0ad49;
+  --honey-bright: #f4cb72;
+  --ink: #09090b;
+  --muted: #92909a;
+  --line: rgba(255, 255, 255, 0.09);
+
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    radial-gradient(
+      ellipse at 50% 45%,
+      rgba(153, 101, 24, 0.09),
+      transparent 60%
+    ),
+    var(--ink);
+  color: #f4f0e8;
+  font-family: "DM Sans", sans-serif;
+}
+
+
+.admin-login *,
+.admin-login *::before,
+.admin-login *::after {
+  box-sizing: border-box;
+}
+
+.admin-login a {
+  text-decoration: none;
+}
+
+
+
+.admin-login-layout {
+  display: grid;
+  grid-template-columns: 250px 340px;
+  align-items: stretch;
+  gap: 14px;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  margin: auto;
+}
+
+
+
+/* LEFT — VISUAL STAGE */
+
+.admin-login-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 0;
+  min-height: 100svh;
+  padding: 32px clamp(28px, 4.5vw, 68px) 25px;
+  overflow: hidden;
+  padding: 22px;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      ellipse at 50% 39%,
+      rgba(153, 101, 24, 0.15),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      rgba(89, 58, 16, 0.11),
+      transparent 48%
+    ),
+    #0c0c0e;
+  border-right: 1px solid var(--line);
+  border : 1px solid var(--line);
+}
+
+.admin-login-visual::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+  content: "";
+  pointer-events: none;
+}
+
+.visual-topline,
+.visual-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: #77737a;
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.visual-topline span:first-child {
+  color: var(--honey);
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.visual-topline span:last-child,
+.visual-footer span:last-child {
+  text-align: right;
+}
+
+/* Temporary bee emblem — CSS artwork, no image required */
+
+.bee-artwork {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 320px;
+  max-height: 590px;
+  margin: 20px -15px;
+}
+
+.bee-orbit {
+  position: absolute;
+  width: min(74%, 390px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(224, 173, 73, 0.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orbit-one {
+  transform: scaleY(0.72) rotate(-25deg);
+  animation: orbit-drift 16s ease-in-out infinite alternate;
+}
+
+.orbit-two {
+  width: min(90%, 470px);
+  border-color: rgba(224, 173, 73, 0.08);
+  transform: scaleY(0.58) rotate(32deg);
+  animation: orbit-drift 20s ease-in-out infinite alternate-reverse;
+}
+
+.bee-emblem {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(130px, 17vw, 220px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(244, 203, 114, 0.38);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, #f8d98b 0%, #b98129 15%, #493014 43%, #17120c 70%);
+  box-shadow:
+    0 0 35px rgba(224, 173, 73, 0.12),
+    0 0 100px rgba(224, 173, 73, 0.08),
+    inset 0 0 30px rgba(255, 220, 145, 0.12);
+  animation: bee-float 5s ease-in-out infinite;
+}
+
+.bee-emblem::before {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255, 225, 155, 0.16);
+  border-radius: 50%;
+  content: "";
+}
+
+.bee-emblem span {
+  color: #ffe0a0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(65px, 9vw, 112px);
+  line-height: 1;
+  text-shadow:
+    0 0 18px rgba(255, 205, 101, 0.55),
+    0 3px 15px rgba(0, 0, 0, 0.8);
+}
+
+.artwork-label {
+  position: absolute;
+  bottom: 7%;
+  margin: 0;
+  color: #77706a;
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.visual-caption {
+  max-width: 510px;
+  padding-bottom: 30px;
+}
+
+.visual-eyebrow {
+  margin: 0 0 18px;
+  color: var(--honey);
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.visual-caption h2 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(34px, 4.3vw, 62px);
+  font-weight: 500;
+  letter-spacing: -2.8px;
+  line-height: 1.08;
+}
+
+.visual-caption h2 span {
+  color: var(--honey);
+}
+
+.visual-description {
+  max-width: 355px;
+  margin: 20px 0 0;
+  color: #8f8c95;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.visual-footer {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 8px;
+}
+
+/* RIGHT — LOGIN PANEL */
+
+.admin-login-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 32px clamp(26px, 4.5vw, 68px) 25px;
+  background:
+    radial-gradient(
+      ellipse at 90% 0%,
+      rgba(224, 173, 73, 0.045),
+      transparent 40%
+    ),
+    #0a0a0c;
+
+    
+padding: 24px;
+border: 1px solid var(--line);
+border-radius: 8px;
+
+}
+
+.login-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.login-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f4f0e8;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border: 1px solid rgba(224, 173, 73, 0.55);
+  color: var(--honey);
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+}
+
+.access-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #77737a;
+  font-family: "DM Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--honey);
+  box-shadow: 0 0 9px rgba(224, 173, 73, 0.5);
+}
+
+.login-content {
+  width: 100%;
+  max-width: 390px;
+  margin: 65px auto;
+}
+
+.admin-login-eyebrow {
+  margin: 0 0 23px;
+  color: var(--honey);
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 1.8px;
+}
+
+.login-content h1 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(43px, 5vw, 64px);
+  font-weight: 500;
+  letter-spacing: -3.5px;
+  line-height: 1.04;
+}
+
+.login-content h1 span {
+  color: var(--honey);
+}
+
+.admin-login-description {
+  margin: 17px 0 43px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.login-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-content label {
+  margin-bottom: 10px;
+  color: #c9c5bd;
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.login-content input {
+  width: 100%;
+  min-height: 51px;
+  margin-bottom: 26px;
+  padding: 0 15px;
+  border: 1px solid #303036;
+  border-radius: 3px;
+  outline: none;
+  background: #101013;
+  color: #f4f0e8;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.login-content input::placeholder {
+  color: #625f69;
+}
+
+.login-content input:hover {
+  border-color: #49434a;
+}
+
+.login-content input:focus {
+  border-color: var(--honey);
+  background: #12110f;
+  box-shadow: 0 0 0 3px rgba(224, 173, 73, 0.08);
+}
+
+.password-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.password-label-row span {
+  margin-bottom: 10px;
+  color: #625f69;
+  font-family: "DM Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.3px;
+  text-align: right;
+}
+
+.login-content button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 5px;
+  padding: 0 19px;
+  border: 1px solid var(--honey-bright);
+  border-radius: 3px;
+  background: var(--honey);
+  color: #171108;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.login-content button span:last-child {
+  font-size: 17px;
+  transition: transform 180ms ease;
+}
+
+.login-content button:hover {
+  background: var(--honey-bright);
+  box-shadow: 0 5px 30px rgba(224, 173, 73, 0.12);
+  transform: translateY(-1px);
+}
+
+.login-content button:hover span:last-child {
+  transform: translate(2px, -2px);
+}
+
+.login-content button:focus-visible,
+.admin-login a:focus-visible {
+  outline: 2px solid var(--honey-bright);
+  outline-offset: 4px;
+}
+
+.admin-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 30px;
+  color: #85818b;
+  font-size: 11px;
+  transition: color 180ms ease;
+}
+
+.admin-back-link span {
+  color: var(--honey);
+}
+
+.admin-back-link:hover {
+  color: #f4f0e8;
+}
+
+.login-panel-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: #625f69;
+  font-family: "DM Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 1.2px;
+}
+
+/* MOTION */
+
+@keyframes bee-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes orbit-drift {
+  from {
+    rotate: -5deg;
+  }
+
+  to {
+    rotate: 5deg;
+  }
+}
+
+/* RESPONSIVE */
+
+@media (min-width: 1500px) {
+  .admin-login-layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(480px, 0.9fr);
+  }
+
+  .admin-login-visual,
+  .admin-login-panel {
+    padding-right: clamp(50px, 6vw, 100px);
+    padding-left: clamp(50px, 6vw, 100px);
+  }
+}
+
+@media (max-width: 1050px) {
+  .admin-login-layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(380px, 1.05fr);
+  }
+
+  .admin-login-visual {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .admin-login-panel {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .visual-caption h2 {
+    font-size: clamp(34px, 4.5vw, 48px);
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-login-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-login-visual {
+    min-height: auto;
+    padding: 24px 24px 30px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bee-artwork {
+    flex: none;
+    min-height: 245px;
+    max-height: 280px;
+    margin: 10px 0 15px;
+  }
+
+  .bee-emblem {
+    width: 135px;
+  }
+
+  .bee-emblem span {
+    font-size: 70px;
+  }
+
+  .orbit-one {
+    width: 230px;
+  }
+
+  .orbit-two {
+    width: 280px;
+  }
+
+  .artwork-label {
+    bottom: 0;
+  }
+
+  .visual-caption {
+    padding-bottom: 0;
+  }
+
+  .visual-caption h2 {
+    font-size: clamp(36px, 8vw, 48px);
+    letter-spacing: -2px;
+  }
+
+  .visual-description {
+    margin-top: 13px;
+  }
+
+  .visual-footer {
+    margin-top: 25px;
+    padding-top: 16px;
+  }
+
+  .admin-login-panel {
+    min-height: 650px;
+    padding: 24px;
+  }
+
+  .login-content {
+    margin: 55px auto;
+  }
+
+  .login-content h1 {
+    font-size: clamp(46px, 10vw, 60px);
+  }
+}
+
+@media (max-width: 400px) {
+  .access-label {
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+
+  .login-panel-top {
+    gap: 10px;
+  }
+
+  .admin-login-panel {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .password-label-row span {
+    font-size: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bee-emblem,
+  .orbit-one,
+  .orbit-two {
+    animation: none;
+  }
+
+  .login-content button,
+  .login-content button span:last-child,
+  .login-content input,
+  .admin-back-link {
+    transition: none;
+  }
+}
+
+
+/* Compact login-only layout */
+.admin-login {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 40%, #1b150c 0%, transparent 55%),
+    #09090b;
+}
+
+.admin-login-layout {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  min-height: 0;
+  margin: auto;
+}
+
+.admin-login-visual {
+  display: none !important;
+}
+
+.admin-login-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 0;
+  padding: 30px;
+  border: 1px solid #30291e;
+  border-radius: 6px;
+  background: rgba(17, 17, 20, 0.97);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.3);
+}
+
+.login-content {
+  width: 100%;
+  max-width: none;
+  margin: 52px auto 42px;
+}
+
+.login-content h1 {
+  font-size: clamp(40px, 8vw, 52px);
+}
+
+.login-panel-top {
+  flex-wrap: wrap;
+}
+
+.login-panel-footer {
+  margin-top: auto;
+}
+
+@media (max-width: 480px) {
+  .admin-login {
+    padding: 16px;
+  }
+
+  .admin-login-panel {
+    padding: 24px;
+  }
+
+  .login-content {
+    margin: 42px auto 32px;
+  }
+}

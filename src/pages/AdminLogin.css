@@ -708,3 +708,99 @@ border-radius: 8px;
     margin: 42px auto 32px;
   }
 }
+
+
+
+/* Password visibility toggle */
+.password-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.login-content .password-input-wrap input {
+  padding-right: 48px;
+  margin-bottom: 26px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 46px;
+  height: 51px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #77737a;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: var(--honey);
+}
+
+.password-toggle svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.password-toggle:focus-visible {
+  outline: 1px solid var(--honey);
+  outline-offset: -5px;
+  border-radius: 4px;
+}
+
+
+/* Fix: keep the eye toggle inside the password field */
+.login-content form .password-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 46px;
+  height: 51px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #77737a;
+  box-shadow: none;
+  transform: none;
+}
+
+.login-content form .password-toggle:hover {
+  background: transparent;
+  color: var(--honey);
+  box-shadow: none;
+  transform: none;
+}
+
+.login-content form .password-toggle svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.login-content form .password-input-wrap input {
+  display: block;
+  width: 100%;
+  padding-right: 48px;
+  margin-bottom: 26px;
+}
+
+.login-content form .password-input-wrap {
+  position: relative;
+  width: 100%;
+}

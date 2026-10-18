@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AdminLogin from './pages/AdminLogin'
+import AdminDashboard from './pages/AdminDashboard'
+import ProtectedRoute from './pages/ProtectedRoute'
 import './App.css'
 
 type Platform = 'Roblox' | 'Unreal'
@@ -436,10 +438,16 @@ function ContactCard({
 export default function AppRouter() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-      </Routes>
+      
+<Routes>
+  <Route path="/" element={<App />} />
+  <Route path="/admin/login" element={<AdminLogin />} />
+
+  <Route element={<ProtectedRoute />}>
+    <Route path="/admin" element={<AdminDashboard />} />
+  </Route>
+</Routes>
+
     </BrowserRouter>
   )
 }

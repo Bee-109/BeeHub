@@ -1,40 +1,75 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AdminLogin from './pages/AdminLogin'
+import { supabase } from './lib/supabase'
 import AdminDashboard from './pages/AdminDashboard'
 import ProtectedRoute from './pages/ProtectedRoute'
 import './App.css'
 
+
+// type Game = {
+//   id: number
+//   title: string
+//   platform: Platform
+//   category: string
+//   description: string
+//   status: 'In Development' | 'Playable' | 'Released'
+//   visits: number
+//   peakCCU: number
+//   featured: boolean
+// }
+
+
+// type Game = {
+//   id: string
+//   title: string
+//   platform: 'Roblox' | 'Unreal'
+//   category: string
+//   description: string
+//   status: 'In Development' | 'Shipped'
+//   visits: number
+//   peakCCU: number
+//   image_url: string | null
+//   featured_slot: number | null
+// }
+
+
+
 type Platform = 'Roblox' | 'Unreal'
 
 type Game = {
-  id: number
+  id: string
   title: string
   platform: Platform
   category: string
   description: string
-  status: 'In Development' | 'Playable' | 'Released'
+  status: 'In Development' | 'Shipped'
   visits: number
   peakCCU: number
-  featured: boolean
+  image_url: string | null
+  featured_slot: number | null
 }
 
-const featuredGames: Game[] = [
-  { id: 1, title: "Bee's Game @1", platform: 'Roblox', category: 'Simulator', description: 'A sample game entry for your featured Roblox projects.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
-  { id: 2, title: "Bee's Game @2", platform: 'Roblox', category: 'Adventure', description: 'Another placeholder waiting for your next creation.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
-  { id: 3, title: "Bee's Game @3", platform: 'Roblox', category: 'Strategy', description: 'A third featured project, ready for its real content.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
-  { id: 4, title: "Bee's Game @4", platform: 'Unreal', category: 'Action', description: 'A placeholder for an Unreal Engine project.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
-  { id: 5, title: "Bee's Game @5", platform: 'Unreal', category: 'Exploration', description: 'A second Unreal project placeholder.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
-  { id: 6, title: "Bee's Game @6", platform: 'Unreal', category: 'Experimental', description: 'A third Unreal project placeholder.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
-]
 
-const otherProjects: Game[] = [
-  { id: 7, title: "Bee's Project @7", platform: 'Roblox', category: 'Prototype', description: 'A small experiment worth showing.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
-  { id: 8, title: "Bee's Project @8", platform: 'Roblox', category: 'Gameplay', description: 'A gameplay experiment in progress.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
-  { id: 9, title: "Bee's Project @9", platform: 'Roblox', category: 'Systems', description: 'A place for interesting technical work.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
-  { id: 10, title: "Bee's Project @10", platform: 'Unreal', category: 'Prototype', description: 'An Unreal experiment in progress.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
-  { id: 11, title: "Bee's Project @11", platform: 'Unreal', category: 'Environment', description: 'An environment and world-building experiment.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
-]
+
+// const featuredGames: Game[] = [
+//   { id: 1, title: "Bee's Game @1", platform: 'Roblox', category: 'Simulator', description: 'A sample game entry for your featured Roblox projects.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
+//   { id: 2, title: "Bee's Game @2", platform: 'Roblox', category: 'Adventure', description: 'Another placeholder waiting for your next creation.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
+//   { id: 3, title: "Bee's Game @3", platform: 'Roblox', category: 'Strategy', description: 'A third featured project, ready for its real content.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
+//   { id: 4, title: "Bee's Game @4", platform: 'Unreal', category: 'Action', description: 'A placeholder for an Unreal Engine project.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
+//   { id: 5, title: "Bee's Game @5", platform: 'Unreal', category: 'Exploration', description: 'A second Unreal project placeholder.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
+//   { id: 6, title: "Bee's Game @6", platform: 'Unreal', category: 'Experimental', description: 'A third Unreal project placeholder.', status: 'In Development', visits: 0, peakCCU: 0, featured: true },
+// ]
+
+// const otherProjects: Game[] = [
+//   { id: 7, title: "Bee's Project @7", platform: 'Roblox', category: 'Prototype', description: 'A small experiment worth showing.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
+//   { id: 8, title: "Bee's Project @8", platform: 'Roblox', category: 'Gameplay', description: 'A gameplay experiment in progress.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
+//   { id: 9, title: "Bee's Project @9", platform: 'Roblox', category: 'Systems', description: 'A place for interesting technical work.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
+//   { id: 10, title: "Bee's Project @10", platform: 'Unreal', category: 'Prototype', description: 'An Unreal experiment in progress.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
+//   { id: 11, title: "Bee's Project @11", platform: 'Unreal', category: 'Environment', description: 'An environment and world-building experiment.', status: 'In Development', visits: 0, peakCCU: 0, featured: false },
+// ]
+
+
 
 const navigation = [
   { id: 'home', number: '01', label: 'Home' },
@@ -59,10 +94,155 @@ function formatNumber(value: number) {
   return value.toLocaleString('en-IN')
 }
 
+
+function AnimatedNumber({ value }: { value: number }) {
+  const [displayValue, setDisplayValue] = useState(0)
+  const [hasEnteredView, setHasEnteredView] = useState(false)
+  const elementRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.5 },
+    )
+
+    observer.observe(element)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!hasEnteredView) return
+
+    const duration = 1600
+    const target = Number(value) || 0
+    let startTime: number | null = null
+    let animationFrame = 0
+
+    function animate(timestamp: number) {
+      if (startTime === null) startTime = timestamp
+
+      const progress = Math.min(
+        (timestamp - startTime) / duration,
+        1,
+      )
+      const easedProgress = 1 - Math.pow(1 - progress, 4)
+
+      setDisplayValue(target * easedProgress)
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate)
+      }
+    }
+
+    animationFrame = requestAnimationFrame(animate)
+
+    return () => cancelAnimationFrame(animationFrame)
+  }, [value, hasEnteredView])
+
+  const formattedValue = Number.isInteger(value)
+    ? Math.round(displayValue).toLocaleString('en-IN')
+    : displayValue.toFixed(1)
+
+  return (
+    <span ref={elementRef}>
+      {formattedValue}
+    </span>
+  )
+}
+
+
+
 function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [featuredPlatform, setFeaturedPlatform] = useState<Platform>('Roblox')
   const [projectsPlatform, setProjectsPlatform] = useState<Platform>('Roblox')
+  const [allProjects, setAllProjects] = useState<Game[]>([])
+
+
+
+const [portfolioStats, setPortfolioStats] = useState({
+  total_games: 0,
+  in_development: 0,
+  total_visits: 0,
+  peak_ccu: 0,
+  years_experience: 0,
+})
+
+
+  
+useEffect(() => {
+  async function loadPortfolioStats() {
+    const { data, error } = await supabase
+      .from('portfolio_stats')
+      .select('total_games, in_development, total_visits, peak_ccu, years_experience')
+      .limit(1)
+      .maybeSingle()
+
+    if (error) {
+      console.error('Could not load portfolio stats:', error)
+      return
+    }
+
+    console.log('Public portfolio stats:', data)
+
+    if (data) {
+      setPortfolioStats({
+        total_games: data.total_games,
+        in_development: data.in_development,
+        total_visits: data.total_visits,
+        peak_ccu: data.peak_ccu,
+        years_experience: Number(data.years_experience),
+      })
+    }
+  }
+
+  loadPortfolioStats()
+}, [])
+
+
+    
+useEffect(() => {
+  async function loadProjects() {
+    const { data, error } = await supabase
+      .from('portfolio_projects')
+      .select('*')
+      .order('created_at', { ascending: true })
+
+    if (error) {
+      console.error('Could not load portfolio projects:', error)
+      return
+    }
+
+    const mappedProjects: Game[] = (data ?? []).map(project => ({
+      id: project.id,
+      title: project.name,
+      platform: project.platform,
+      category: project.genre,
+      description: project.description,
+      status: project.status,
+      visits: Number(project.visits),
+      peakCCU: project.peak_ccu,
+      image_url: project.image_url,
+      featured_slot: project.featured_slot,
+    }))
+
+    setAllProjects(mappedProjects)
+  }
+
+  void loadProjects()
+}, [])
+
+
+
 
   useEffect(() => {
     const sections = navigation
@@ -90,21 +270,26 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
-  const selectedFeatured = featuredGames.filter(
-    (game) => game.platform === featuredPlatform && game.featured,
-  )
+  const selectedFeatured = allProjects
+  .filter((game) => game.featured_slot !== null)
+  .sort((a, b) => a.featured_slot! - b.featured_slot!)
+  .filter((game) => game.platform === featuredPlatform)
 
-  const selectedProjects = otherProjects.filter(
-    (game) => game.platform === projectsPlatform,
-  )
+const selectedProjects = allProjects.filter(
+  (game) =>
+    game.featured_slot === null &&
+    game.platform === projectsPlatform,
+)
 
-  const stats = [
-    { label: 'Total Games', value: 0 },
-    { label: 'In Development', value: 0 },
-    { label: 'Total Visits', value: 0 },
-    { label: 'Peak CCU', value: 0 },
-    { label: 'Years of Experience', value: 0 },
-  ]
+  
+const stats = [
+  { label: 'Total Games', value: portfolioStats.total_games },
+  { label: 'In Development', value: portfolioStats.in_development },
+  { label: 'Total Visits', value: portfolioStats.total_visits },
+  { label: 'Peak CCU', value: portfolioStats.peak_ccu },
+  { label: 'Years of Experience', value: portfolioStats.years_experience },
+]
+
 
   return (
     <div className="site-shell">
@@ -202,7 +387,9 @@ function App() {
             {stats.map((stat, index) => (
               <article className="stat-card" key={stat.label}>
                 <span className="stat-index">0{index + 1}</span>
-                <span className="stat-value">{formatNumber(stat.value)}</span>
+                <span className="stat-value">
+                    <AnimatedNumber value={stat.value} />
+                </span>
                 <span className="stat-label">{stat.label}</span>
               </article>
             ))}
@@ -377,6 +564,58 @@ function PlatformFilter({
   )
 }
 
+// function GameCard({
+//   game,
+//   index,
+//   featured = false,
+// }: {
+//   game: Game
+//   index: number
+//   featured?: boolean
+// }) {
+//   return (
+//     <article className={`game-card ${featured ? 'featured-card' : 'project-card'}`}>
+//       <div className={`game-art game-art-${(index % 5) + 1}`}>
+//   {game.image_url && (
+//     <img
+//       className="game-thumbnail"
+//       src={game.image_url}
+//       alt={`${game.title} thumbnail`}
+//     />
+//   )}
+//   <span className="game-art-number">{String(index + 1).padStart(2, '0')}</span>
+//   <span className="game-art-symbol">{['◈', '✳', '◇', '⬡', '✦'][index % 5]}</span>
+//   <span className="game-platform">{game.platform}</span>
+//   <span className="game-art-caption">BEE-109 / PROJECT {String(index + 1).padStart(2, '0')}</span>
+// </div>
+
+//       <div className="game-details">
+//         <div className="game-meta">
+//           <span>{game.category}</span>
+//           <span className={`game-status ${game.status === 'Shipped' ? 'shipped' : 'in-development'}`}>
+//   <i />
+//   {game.status}
+// </span>
+//         </div>
+//         <h3 className="game-title">{game.title}</h3>
+//         <p>{game.description}</p>
+
+//         <div className="game-stats">
+//           <div><strong>{formatNumber(game.visits)}</strong><span>VISITS</span></div>
+//           <div><strong>{formatNumber(game.peakCCU)}</strong><span>PEAK CCU</span></div>
+//         </div>
+
+//         <div className="game-tags">
+//           <span>{game.platform}</span>
+//           <span>{game.category}</span>
+//         </div>
+//       </div>
+//     </article>
+//   )
+// }
+
+
+
 function GameCard({
   game,
   index,
@@ -388,34 +627,73 @@ function GameCard({
 }) {
   return (
     <article className={`game-card ${featured ? 'featured-card' : 'project-card'}`}>
-      <div className={`game-art game-art-${(game.id % 5) + 1}`}>
-        <span className="game-art-number">{String(game.id).padStart(2, '0')}</span>
-        <span className="game-art-symbol">{['◈', '✳', '◇', '⬡', '✦'][index % 5]}</span>
+      <div className={`game-art game-art-${(index % 5) + 1}`}>
+        {game.image_url && (
+          <img
+            className="game-thumbnail"
+            src={game.image_url}
+            alt={`${game.title} thumbnail`}
+          />
+        )}
+
+        <div className="game-art-overlay" />
+
+        <span className="game-art-number">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
         <span className="game-platform">{game.platform}</span>
-        <span className="game-art-caption">BEE-109 / PROJECT {String(game.id).padStart(2, '0')}</span>
-      </div>
 
-      <div className="game-details">
-        <div className="game-meta">
-          <span>{game.category}</span>
-          <span className="game-status"><i />{game.status}</span>
-        </div>
-        <h3>{game.title}</h3>
-        <p>{game.description}</p>
+        <div className="game-art-content">
+          <div className="game-meta">
+            <span>{game.category}</span>
+            <span className={`game-status ${game.status === 'Shipped' ? 'shipped' : 'in-development'}`}>
+              <i />
+              {game.status}
+            </span>
+          </div>
 
-        <div className="game-stats">
-          <div><strong>{formatNumber(game.visits)}</strong><span>VISITS</span></div>
-          <div><strong>{formatNumber(game.peakCCU)}</strong><span>PEAK CCU</span></div>
+          <h3 className="game-title">{game.title}</h3>
+
+          <p className="game-description">{game.description}</p>
+
+          <div className="game-stats">
+            <div>
+              <strong>{formatNumber(game.visits)}</strong>
+              <span>VISITS</span>
+            </div>
+            <div>
+              <strong>{formatNumber(game.peakCCU)}</strong>
+              <span>PEAK CCU</span>
+            </div>
+          </div>
+
+          <div className="game-card-bottom">
+            <div className="game-tags">
+              <span>{game.platform}</span>
+              <span>{game.category}</span>
+            </div>
+
+            {game.platform === 'Roblox' && (
+              <a
+                className="game-play-button"
+                href="#contact"
+                aria-label={`Learn more about ${game.title}`}
+              >
+                Try Game Now <span>↗</span>
+              </a>
+            )}
+          </div>
         </div>
 
-        <div className="game-tags">
-          <span>{game.platform}</span>
-          <span>{game.category}</span>
-        </div>
+        <span className="game-art-caption">
+          BEE-109 / PROJECT {String(index + 1).padStart(2, '0')}
+        </span>
       </div>
     </article>
   )
 }
+
 
 function ContactCard({
   label,

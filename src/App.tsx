@@ -327,7 +327,7 @@ const stats = [
         
 <div className="sidebar-bottom">
   <span className="sidebar-status"><span /> THE HIVE IS GROWING</span>
-  <span className="sidebar-version">BEEHUB / 001</span>
+  <span className="sidebar-version">BEEHUB / 109</span>
 
   <a className="admin-link" href="/admin/login">
     <span>↗</span>
@@ -348,7 +348,7 @@ const stats = [
               <br />
               <span>BUILD IT.</span>
               <br />
-              PLAY IT.
+              PLAY IT
             </h1>
             <p className="hero-description">
               A home for games, 3D art, experiments, and everything

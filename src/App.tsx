@@ -48,6 +48,7 @@ type Game = {
   peakCCU: number
   image_url: string | null
   featured_slot: number | null
+  other_project_slot: number | null
 }
 
 
@@ -233,6 +234,7 @@ useEffect(() => {
       peakCCU: project.peak_ccu,
       image_url: project.image_url,
       featured_slot: project.featured_slot,
+      other_project_slot: project.other_project_slot,
     }))
 
     setAllProjects(mappedProjects)
@@ -275,11 +277,17 @@ useEffect(() => {
   .sort((a, b) => a.featured_slot! - b.featured_slot!)
   .filter((game) => game.platform === featuredPlatform)
 
-const selectedProjects = allProjects.filter(
-  (game) =>
-    game.featured_slot === null &&
-    game.platform === projectsPlatform,
-)
+const selectedProjects = allProjects
+  .filter(
+    (game) =>
+      game.other_project_slot !== null &&
+      game.status === 'Shipped' &&
+      game.platform === projectsPlatform,
+  )
+  .sort(
+    (a, b) =>
+      a.other_project_slot! - b.other_project_slot!,
+  )
 
   
 const stats = [

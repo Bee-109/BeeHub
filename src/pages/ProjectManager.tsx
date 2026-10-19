@@ -38,7 +38,13 @@ const emptyForm: ProjectForm = {
   featured_slot: '',
 }
 
-export default function ProjectManager() {
+
+
+export default function ProjectManager({
+  onProjectsChanged,
+}: {
+  onProjectsChanged?: () => void
+}) {
   const [projects, setProjects] = useState<Project[]>([])
   const [form, setForm] = useState<ProjectForm>(emptyForm)
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -178,6 +184,7 @@ export default function ProjectManager() {
       setMessage(editingId ? 'Project updated successfully.' : 'Project added successfully.')
       resetForm()
       await loadProjects()
+      onProjectsChanged?.()
     } catch (error) {
       setMessage(
         error instanceof Error
@@ -212,6 +219,7 @@ export default function ProjectManager() {
     setMessage('Project deleted.')
     if (editingId === project.id) resetForm()
     await loadProjects()
+    onProjectsChanged?.()
   }
 
   return (

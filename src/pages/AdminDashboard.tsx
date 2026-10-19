@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import './AdminDashboard.css'
 import ProjectManager from './ProjectManager'
 import FeaturedSlots from './FeaturedSlots'
+import OtherProjectSlots from './OtherProjectSlots'
 
 type Section = 'stats' | 'games' | 'projects'
 
@@ -15,6 +16,11 @@ const sections = [
 
 export default function AdminDashboard() {
   const [activeSection, setActiveSection] = useState<Section>('stats')
+  const [projectsRevision, setProjectsRevision] = useState(0)
+
+function handleProjectsChanged() {
+  setProjectsRevision(revision => revision + 1)
+}
   const [signingOut, setSigningOut] = useState(false)
   const [error, setError] = useState('')
 
@@ -332,8 +338,15 @@ async function handleSaveStats(
             </div>
           )} */}
 
-            {activeSection === 'projects' && <ProjectManager />}
+            
 
+              {activeSection === 'projects' && (
+                <ProjectManager onProjectsChanged = {handleProjectsChanged} />
+               )}
+
+                  {activeSection === 'projects' && (
+                    <OtherProjectSlots refreshKey = {projectsRevision} />
+                  )}
 
         </div>
 

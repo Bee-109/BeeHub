@@ -304,7 +304,7 @@ const stats = [
       <aside className="sidebar">
         <a className="brand" href="#home" aria-label="BeeHub home">
           <span className="brand-mark">B.</span>
-          <span className="brand-name">BeeHub<span>.</span></span>
+          <span className="brand-name">Bee<span></span></span>
         </a>
 
         <div className="sidebar-caption">THE CREATOR SPACE</div>
@@ -528,7 +528,7 @@ const stats = [
           </div>
 
           <div className="contact-grid">
-            <ContactCard label="EMAIL" value="bee@example.com" href="mailto:bee@example.com" />
+            <ContactCard label="EMAIL" value="contact.beegames@gmail.com" href="mailto:bee@example.com" />
             <ContactCard label="GITHUB" value="Bee-109" href="https://github.com/Bee-109" />
             <ContactCard label="DISCORD" value="Bee-109" href="#" />
             <ContactCard label="PORTFOLIO" value="BeeHub" href="#home" />

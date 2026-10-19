@@ -342,13 +342,13 @@ const stats = [
 
           <div className="hero-copy">
             <div className="section-kicker"><span>01</span><i /> HOME</div>
-            <p className="eyebrow">INDEPENDENT CREATOR · BEE-109</p>
+            <p className="eyebrow">INDEPENDENT CREATOR · BEE</p>
             <h1>
-              IDEAS INTO
+              DREAM IT.
               <br />
-              <span>PLAYABLE</span>
+              <span>BUILD IT.</span>
               <br />
-              REALITIES.
+              PLAY IT.
             </h1>
             <p className="hero-description">
               A home for games, 3D art, experiments, and everything
@@ -372,7 +372,7 @@ const stats = [
               <span>B</span>
             </div>
             <span className="art-note art-note-top">✳ CREATION IN PROGRESS</span>
-            <span className="art-note art-note-bottom">BUILT BY BEE-109</span>
+            <span className="art-note art-note-bottom">BUILT BY BEE</span>
           </div>
 
           <div className="hero-bottom">
@@ -445,7 +445,7 @@ const stats = [
           <div className="about-grid">
             <div className="about-copy">
               <p className="about-lead">
-                I'm Bee-109 — a creator exploring game development,
+                I'm Bee — a creator exploring game development,
                 3D art, and the space between an idea and its execution.
               </p>
               <p>
